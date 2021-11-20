@@ -5,5 +5,3 @@ move .\dist\interpreter.exe .\
 del cbLang.exe
 del interpreter.spec
 rename interpreter.exe cbLang.exe
-
-cbLang.exe -c code.cb codeOut.exe

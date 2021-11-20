@@ -5,7 +5,12 @@ import sys
 import shutil
 
 #PyPy
-import PyInstaller.__main__ as PyInstaller
+pyInstallerInstalled = True
+
+try:
+    import PyInstaller.__main__ as PyInstaller
+except ImportError:
+    pyInstallerInstalled = False
 
 #Custom
 from parse import Parser
@@ -60,14 +65,14 @@ def HandleArgs() -> None:
             else:
                 Error("Input file not found")
     elif sys.argv[1] == "--compile" or sys.argv[1] == "-c":
+        if pyInstallerInstalled == False:
+            Error("PyInstaller is not installed \n Please run \"pip install PyInstaller\"")
         if len(sys.argv) < 4:
             Error("Invalid number of arguments")
         else:
-            print(str(sys.argv))
             if os.path.isfile(sys.argv[2]):
                 parser = Parser(GetCode((sys.argv[2])))
                 fileName = sys.argv[3].split(".")[0]
-                print("NAME " + fileName)
                 with open(fileName + ".py", "w") as f:
                     f.write(parser.code)
                 if (os.path.isfile(fileName + ".exe")):

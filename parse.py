@@ -9,8 +9,8 @@ class Parser:
 
     def Parse(self, code: str) -> str:
         #Parse code into normal python
-        code = self.ParseComments(code)
         code = self.ParseInclude(code)
+        code = self.ParseComments(code)
         code = self.ParseKeyWords(code)
         code = self.ParseEOL(code)
         code = self.ParseBraces(code)
@@ -24,8 +24,12 @@ class Parser:
 
     def ParseComments(self, code: str) -> str:
         for line in code.splitlines():
-            if line.startswith("//"):
-                code = code.replace(line, "")
+            if "//" in line:
+                if list(line)[0] == "/" and list(line)[1] == "/":
+                    code = code.replace(line, "")
+                else:
+                    newLine = line.partition("//")[0]
+                    code = code.replace(line, newLine)
         return code
 
     def ParseInclude(self, code: str) -> str:
@@ -38,22 +42,25 @@ class Parser:
                     iterator += 1
                     if word == "include":
                         includeName = line.split()[iterator].replace(";", "")
-                        code = code.replace(
-                            line, f"from {includeName} import *;")
+                        code = code.replace(line, f"from {includeName} import *;")
         for line in code.splitlines():
             if "include" in line:
                 iterator = 0
                 for word in line.split():
                     iterator += 1
                     if word == "include":
-                        includeFile = line.split()[iterator].replace(";", "")
+                        includeName = line.split()[iterator].replace(";", "")
                         code = code.replace(line, "")
-        with open(includeFile+".cb", "r") as file:
+        with open(includeName + ".cb", "r") as file:
             code = code + "\n" + file.read()
         return code
 
     def ParseKeyWords(self, code: str) -> str:
         code = code.replace("this", "self")
+        code = code.replace("true", "True")
+        code = code.replace("false", "False")
+        code = code.replace("null", "None")
+        code = code.replace("else if", "elif")
         return code
 
     def ParseEOL(self, code: str) -> str:
@@ -61,7 +68,7 @@ class Parser:
 
         for line in code.splitlines():
             skipLine = False
-            for token in ["function", "while", "for"]:
+            for token in ["function", "while", "for", "if", "else", "elif"]:
                 if token in line:
                     skipLine = True
             if ''.join(line.split()).startswith(("{", "}", "\n", "class")):
