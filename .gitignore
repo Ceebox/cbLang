@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#cbLang test files
+*.cb
+Testing.py
+
+#Any compiled files
+*.exe

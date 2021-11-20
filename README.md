@@ -1,2 +1,2 @@
 # cbLang
-A programming language made in Python
+A bad programming language made in Python
