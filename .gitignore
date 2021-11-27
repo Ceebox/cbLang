@@ -131,6 +131,7 @@ dmypy.json
 #cbLang test files
 *.cb
 Testing.py
+cbLangBootstrap/*
 
 #Any compiled files
 *.exe

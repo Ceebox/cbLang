@@ -1,4 +1,4 @@
-pyinstaller --icon="Resources/cbIcon.ico" --onefile interpreter.py
+pyinstaller --icon="Resources/cbIcon.ico" --onefile --log-level ERROR interpreter.py
 move .\dist\interpreter.exe .\
 @RD /S /Q .\dist
 @RD /S /Q .\build
