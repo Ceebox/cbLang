@@ -129,7 +129,6 @@ dmypy.json
 .pyre/
 
 #cbLang test files
-*.cb
 Testing.py
 cbLangBootstrap/*
 

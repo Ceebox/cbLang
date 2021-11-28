@@ -1,0 +1,8 @@
+from native reference sys;
+
+class Error()
+{
+    function Start(error):
+        print(error);
+        sys.exit();
+}  

@@ -23,7 +23,7 @@ So, how does it work?
     }
 *^This is a basic `Hello World` program.*
 
-To run this, you will need the CBLang interpreter that you can either obtain by running `.\build.bat` or downloading it from the [releases section](https://github.com/Ceebox/cbLang/releases).
+To run this, you will need the CBLang interpreter that you can either obtain by downloading it from the [releases section](https://github.com/Ceebox/cbLang/releases) or running `.\build.bat` (this will give you a depricated version of the interpreter based on the old Python code).
 
 ⠀  
 ⠀  
