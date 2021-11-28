@@ -5,13 +5,15 @@ CBLang is a programming language aiming to fix most of my problems with Python (
 
 CBLang can be either interpreted, transpiled to python, or compiled into an exe using [PyInstaller](https://pyinstaller.readthedocs.io/en/stable/).
 
-CBLang can run without any dependencies (including PyInstaller - you just won't be able to compile your programs, but they will run and transpile fine).
+CBLang can run without any dependencies (including PyInstaller - *you just won't be able to compile your programs*, but they will run and transpile fine).
 
 CBLang is only tested on Windows, but I'm sure it wouldn't be hard at all to get working on Linux.
 
-Be warned that everything is basically held together by hopes and dreams, so you are going to get a load of super random errors.
+Be warned that everything is basically held together by hopes and dreams, *so you are going to get a load of super random errors*.
 
 So, how does it work?
+
+## Using the language
 
     class Main()
     {
@@ -26,13 +28,21 @@ So, how does it work?
 To run this, you will need the CBLang interpreter that you can either obtain by downloading it from the [releases section](https://github.com/Ceebox/cbLang/releases) or running `.\build.bat` (this will give you a depricated version of the interpreter based on the old Python code).
 
 ⠀  
+## Running, transpiling and 'compiling'
+CBLang supports lots of methods of running your code, either having it directly interpreted, transpiling it to Python and spitting out the file for you to run when you want, or using PyInstaller to 'compile' (a more technically correct word would be 'pack') your code to an exe.
+
+To run code directly, use the command `cbLang.exe fileName.cb` or `cbLang.exe -r fileName.cb`.⠀  
+To transpile code, use the command `cbLang.exe -t fileName.cb outputfile.py`.⠀  
+To compile code, use the command `cbLang.exe -c filename.cb output.exe`. *(This requires PyInstaller to be installed)*.⠀   
+
 ⠀  
-More advanced behaviour:
+⠀  
+**More advanced behaviour:**
 
     //main.cb
     
     //Include python libraries
-    from native include sys;
+    from native reference sys;
 
     //Include other cbLang code
     include OtherFile;
