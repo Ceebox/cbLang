@@ -34,7 +34,7 @@ class Main()
     {
         if sys.argv[1] == "--help" or sys.argv[1] == "-h"
         {
-            Error("Command line arguments: \n--help -h: Prints this message \n--version -b: Prints the version of the interpreter \n--run -r (default) [file]: Runs the interpreter on the file specified \n--transpile -t [file] [address]: Converts the file specified into python code and saves it to the address specified \n--compile -c [file] [address]: Compiles the file specified into an executable and saves it to the address specified");
+            Error("Command line arguments: \n--help -h: Prints help message \n--version -b: Prints the version of the interpreter \n--run -r (default) [file]: Runs the interpreter on the file specified \n--transpile -t [file] [address]: Converts the file specified into python code and saves it to the address specified \n--compile -c [file] [address]: Compiles the file specified into an executable and saves it to the address specified");
         }
         else if sys.argv[1] == "--run" or sys.argv[1] == "-r"
         {

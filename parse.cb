@@ -427,10 +427,24 @@ class Parser
             {
                 if (line.partition("def")[0].strip() == "")
                 {
-                    code = code.replace(line, line.replace("(", "(self,"));
+                    code = code.replace(line, line.replace("(", "(this,"));
                 }
             }
         }
+        newCode = [];
+        for count, line in enumerate(code.splitlines())
+        {
+            if "static " in line
+            {
+                if not this.IsInString("static ", line, false)
+                {
+                    newCode.insert(count - 1, "        @staticmethod");
+                    line = line.replace(line, line.replace("static ", ""));
+                }
+            }
+            newCode.append(line);
+        }
+        code = "\n".join(newCode);
 
         return code;
     }
@@ -486,6 +500,18 @@ class Parser
             newCode += ("    " * indentCount) + line + "\n";
         }
         code = newCode;
+
+        //this
+        for line in code.splitlines()
+        {
+            if "this" in line
+            {
+                if not this.IsInString("this", line, true)
+                {
+                    code = code.replace(line, line.replace("this", "self"));
+                }
+            }
+        }
 
         //Remove indent helpers
         newCode = "";

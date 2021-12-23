@@ -91,3 +91,20 @@ To compile code, use the command `cbLang.exe -c filename.cb output.exe`. *(This 
     }
 
 *^This is a basic example of importing external code, along with demonstrating other concepts in the programming language.*
+
+    class Main
+    {
+        function Main()
+        {
+            Other.Test();
+        }
+    }
+
+    class Other
+    {
+        static function Test()
+        {
+            print("This code was printed from a static m,ethod in Other");
+        }
+    }
+*^This is a basic example of static methods.*
