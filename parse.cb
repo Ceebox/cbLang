@@ -72,7 +72,8 @@ class Parser
                         {
                             if words[wordNo + 2] == "include"
                             {
-                                words[wordNo] = f"from {words[wordNo + 3]} import *";
+                                words[wordNo + 3] = words[wordNo + 3].replace(";", "");
+                                code = code.replace(line, (f"from {words[wordNo + 3]} import *"));
                             }
                         }
                     }
@@ -84,6 +85,10 @@ class Parser
             words = line.split();
             for wordNo, word in enumerate(words)
             {
+                if "from" in line
+                {
+                    continue;
+                }
                 if word == "include"
                 {
                     if not this.IsInString(word, line)
@@ -506,7 +511,7 @@ class Parser
         {
             if "this" in line
             {
-                if not this.IsInString("this", line, true)
+                if not this.IsInString("this", line)
                 {
                     code = code.replace(line, line.replace("this", "self"));
                 }
