@@ -146,16 +146,6 @@ class Parser
     {
         for line in code.splitlines()
         {
-            if "this" in line
-            {
-                if not this.IsInString("this", line)
-                {
-                    code = code.replace(line, line.replace("this", "self"));
-                }
-            }
-        }
-        for line in code.splitlines()
-        {
             if "true" in line
             {
                 if not this.IsInString("true", line)
@@ -458,6 +448,24 @@ class Parser
     {
         //I'm not going to lie, I made a lot of mistakes. Let's hope these hacks fix it.
 
+        newCode = "";
+        for line in code.splitlines()
+        {
+            chars = "";
+            for c in line
+            {
+                if "t"+"his" in line
+                {
+                    if not this.IsInString(("t"+"his"), line)
+                    {
+                        line = line.replace(("t"+"his"), "self");
+                    }
+                }
+            }
+            newCode += line + "\n";
+        }
+        code = newCode;
+
         splitLines = code.splitlines();
         for lineNo, line in enumerate(splitLines)
         {
@@ -505,18 +513,6 @@ class Parser
             newCode += ("    " * indentCount) + line + "\n";
         }
         code = newCode;
-
-        //this
-        for line in code.splitlines()
-        {
-            if "this" in line
-            {
-                if not this.IsInString("this", line)
-                {
-                    code = code.replace(line, line.replace("this", "self"));
-                }
-            }
-        }
 
         //Remove indent helpers
         newCode = "";
@@ -569,16 +565,17 @@ class Parser
         return code;
     }
 
-    function IsInString(phrase : str, line : str, returnIfMultiple = false) is bool
+    function IsInString(phrase : str, line : str, returnIfMultiple = false, returnIfNotInLine = false) is bool
     {
         if not phrase in line
         {
-            return false;
+            return returnIfNotInLine;
         }
         if line.count(phrase) > 1
         {
             return returnIfMultiple;
         }
+
         leftSide = line.partition(phrase)[0];
         if leftSide.count("\"") > 0
         {
@@ -591,6 +588,7 @@ class Parser
                 return true;
             }
         }
+
         if leftSide.count("\'") > 0
         {
             if leftSide.count("\'") % 2 == 0
