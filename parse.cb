@@ -192,7 +192,7 @@ class Parser
         for line in code.splitlines()
         {
             skipLine = false;
-            for token in ("function", "while", "for", "if", "else", "elif", "with", "from")
+            for token in ("function", "while", "for", "if", "else", "elif", "with", "from", "try", "except")
             {
                 if token in line
                 {
