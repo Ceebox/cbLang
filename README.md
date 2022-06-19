@@ -104,7 +104,7 @@ To compile code, use the command `cbLang.exe -c filename.cb output.exe`. *(This 
     {
         static function Test()
         {
-            print("This code was printed from a static m,ethod in Other");
+            print("This code was printed from a static method in Other");
         }
     }
 *^This is a basic example of static methods.*
