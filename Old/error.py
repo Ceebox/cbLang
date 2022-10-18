@@ -1,5 +1,11 @@
 import sys
-class Error():
+class CompileError(Error):
+   def __init__ (self, error):
+       super().__init__("CompileError: " + error); 
+class SyntaxError(Error):
+    def __init__ (self, error):
+       super().__init__("SyntaxError: " + error);
+class Error:
     def __init__(self, error) -> None:
         print(error)
-        sys.exit()
+        sys.exit(1)
