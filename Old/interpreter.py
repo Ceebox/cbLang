@@ -15,6 +15,7 @@ except ImportError:
 #Custom
 from parse import Parser
 from error import Error
+from error import CompileError
 
 version = "0.0.1"
 
@@ -32,7 +33,7 @@ def GetCode(filePath) -> str:
 
 def HandleArgs() -> None:
     if sys.argv[1] == "--help" or sys.argv[1] == "-h":
-        Error('''
+        CompileError('''
         Command line arguments:
         --help -h: Prints this message
         --version -b: Prints the version of the interpreter
@@ -42,16 +43,17 @@ def HandleArgs() -> None:
             ''')
     elif sys.argv[1] == "--run" or sys.argv[1] == "-r":
         if len(sys.argv) < 3:
-            Error("Invalid number of arguments")
+            CompileError("Invalid number of arguments")
         else:
-            if os.path.isfile(sys.argv[2]):
-                parser = Parser(GetCode((sys.argv[2])))
+            filename = sys.argv[2]
+            if os.path.isfile(filename):
+                parser = Parser(GetCode((filename)),filename)
                 interpreter = Interpreter()
                 interpreter.Interpret(parser.code)
             else:
                 Error("File not found")
     elif os.path.isfile(sys.argv[1]):
-        parser = Parser(GetCode(sys.argv[1]))
+        parser = Parser(GetCode(sys.argv[1]),sys.argv[1])
         interpreter = Interpreter()
         interpreter.Interpret(parser.code)
     elif sys.argv[1] == "--transpile" or sys.argv[1] == "-t":
@@ -59,19 +61,19 @@ def HandleArgs() -> None:
             Error("Invalid number of arguments")
         else:
             if os.path.isfile(sys.argv[2]):
-                parser = Parser(GetCode((sys.argv[2])))
+                parser = Parser(GetCode((sys.argv[2])),sys.argv[2])
                 with open(sys.argv[3], "w") as f:
                     f.write(parser.code)
             else:
                 Error("Input file not found")
     elif sys.argv[1] == "--compile" or sys.argv[1] == "-c":
         if pyInstallerInstalled == False:
-            Error("PyInstaller is not installed \n Please run \"pip install PyInstaller\"")
+            CompileError("PyInstaller is not installed \n Please run \"pip install PyInstaller\"")
         if len(sys.argv) < 4:
-            Error("Invalid number of arguments")
+            CompileError("Invalid number of arguments")
         else:
             if os.path.isfile(sys.argv[2]):
-                parser = Parser(GetCode((sys.argv[2])))
+                parser = Parser(GetCode((sys.argv[2])),sys.argv[2])
                 fileName = sys.argv[3].split(".")[0]
                 with open(fileName + ".py", "w") as f:
                     f.write(parser.code)
@@ -86,14 +88,14 @@ def HandleArgs() -> None:
             else:
                 Error("File not found")
     else:
-        Error("Invalid argument")
+        CompileError("Invalid argument")
 
     if (os.path.isfile("output.py")):
         os.remove("output.py")
 
 def CheckArgs() -> str:
     if len(sys.argv) < 2:
-        Error("Invalid number of arguments")
+        CompileError("Invalid number of arguments")
     HandleArgs()
     
 if __name__ == "__main__":

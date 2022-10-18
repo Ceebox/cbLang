@@ -1,10 +1,12 @@
 from error import Error
+from error import SyntaxError
 
 class Parser:
-    def __init__(self, code: str):
+    def __init__(self, code: str, filename):
         #Pass in code
         self.code = code
         #Parse code
+        self.filename = filename;
         self.code = self.Parse(self.code)
 
     def Parse(self, code: str) -> str:
@@ -115,11 +117,12 @@ class Parser:
                             break
 
             elif line.endswith((":")):
-                Error(f"Syntax error in: \n{line}")
+                Syntax
+                SyntaxError(f"Syntax error in: \n{line}")
             else:
-                Error(f"Missing semicolon in: \n{line}")
+                SyntaxError(f"Missing semicolon in: \n{line}")
             if line.endswith((":")):
-                Error(f"Syntax error in: \n{line}")
+                SyntaxError(f"Syntax error in: \n{line}")
 
         return code
 
