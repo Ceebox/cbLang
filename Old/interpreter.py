@@ -1,5 +1,6 @@
 #Native
 import os.path
+from os import name
 import subprocess
 import sys
 import shutil
@@ -17,6 +18,7 @@ from parse import Parser
 from error import Error
 
 version = "0.0.1"
+prefix = ".exe" if name == "win32" else ""
 
 class Interpreter:
     def Interpret(self, code : str) -> None:
@@ -75,10 +77,10 @@ def HandleArgs() -> None:
                 fileName = sys.argv[3].split(".")[0]
                 with open(fileName + ".py", "w") as f:
                     f.write(parser.code)
-                if (os.path.isfile(fileName + ".exe")):
-                    os.remove(fileName + ".exe")
+                if (os.path.isfile(fileName+prefix)):
+                    os.remove(fileName+prefix)
                 subprocess.call(["PyInstaller", fileName + ".py", "--onefile"])
-                os.rename("dist/{}".format(fileName+".exe"), "./"+sys.argv[3])
+                os.rename("dist/{}".format(fileName+prefix), "./"+sys.argv[3])
                 os.remove(fileName + ".py")
                 os.remove(fileName + ".spec")
                 shutil.rmtree("build")
